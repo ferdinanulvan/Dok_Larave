@@ -7,6 +7,7 @@ use \App\Http\Controllers\KategoriController;
 use \App\Http\Controllers\BarangController;
 use \App\Http\Controllers\BarangMasukController;
 use \App\Http\Controllers\BarangKeluarController;
+use \App\Http\Controllers\SearchController;
 
 
 Route::get('/', function () {
@@ -29,4 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/barangmasuk', \App\Http\Controllers\BarangMasukController::class);
     Route::resource('/barangkeluar', \App\Http\Controllers\BarangKeluarController::class);
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
+    
 });

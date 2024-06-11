@@ -34,7 +34,7 @@ class Kategori extends Model
     //merelasikan tabel kategori ke tabel barang (one to many)
     public function barang()
     {
-        return $this->hasMany(Barangg::class);
+        return $this->hasMany(Barang::class);
     }
     
 
@@ -69,12 +69,20 @@ class Kategori extends Model
     //menggunakan kriteria kategori.id tertentu
     public static function showKategoriById($id){
         return DB::table('kategori')
-                ->leftJoin('barangg','kategori.id','=','barangg.kategori_id')
-                ->select('kategori.id','barangg.id','kategori.deskripsi',DB::raw('ketKategori(kategori.kategori) as ketkategori'),
-                         'barangg.merk','barangg.seri','barangg.spesifikasi','barangg.stok')
+                ->leftJoin('barang','kategori.id','=','barang.kategori_id')
+                ->select('kategori.id','barang.id','kategori.deskripsi',DB::raw('ketKategori(kategori.kategori) as ketkategori'),
+                         'barang.merk','barang.seri','barang.spesifikasi','barang.stok')
                 ->where('kategori.id','=',$id)
                 ->get();
 
+    }
+    public static function search($query)
+    {
+        return DB::table('kategori')
+            ->select('kategori.id', 'deskripsi', DB::raw('ketKategori(kategori) as ketkategori'), 'kategori')
+            ->where('deskripsi', 'LIKE', "%{$query}%")
+            ->orWhere('kategori', 'LIKE', "%{$query}%")
+            ->get();
     }
 
 }

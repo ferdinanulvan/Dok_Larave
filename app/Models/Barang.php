@@ -24,4 +24,12 @@ class Barang extends Model
     {
         return $this->hasMany(BarangKeluar::class);
     }
+    public static function search($query)
+    {
+        return self::where('merk', 'LIKE', "%{$query}%")
+                    ->orWhere('seri', 'LIKE', "%{$query}%")
+                    ->orWhere('spesifikasi', 'LIKE', "%{$query}%")
+                    ->orWhere('stok', 'LIKE', "%{$query}%")
+                    ->get();
+    }
 }
