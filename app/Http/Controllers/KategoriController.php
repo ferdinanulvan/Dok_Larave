@@ -44,11 +44,28 @@ class KategoriController extends Controller
             'kategori' => 'required|in:M,A,BHP,BTHP',
         ]);
 
+        try {
+            DB::beginTransaction(); // Mulai transaksi
+    
+            // Masukkan data ke dalam tabel kategori
+            Kategori::create([
+                'deskripsi' => $request->deskripsi,
+                'kategori' => $request->kategori
+            ]);
+    
+            DB::commit(); // Commit transaksi
+    
+            return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        } catch (\Exception $e) {
+            report($e);
+            DB::rollBack(); // Rollback transaksi jika terjadi kesalahan
+            return redirect()->back()->with(['error' => 'Data Gagal Disimpan!']);
+        }
         // Create new category
-        Kategori::create([
-            'deskripsi' => $request->deskripsi,
-            'kategori' => $request->kategori,
-        ]);
+        // Kategori::create([
+        //     'deskripsi' => $request->deskripsi,
+        //     'kategori' => $request->kategori,
+        // ]);
 
         // Redirect to index
         return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Disimpan!']);
