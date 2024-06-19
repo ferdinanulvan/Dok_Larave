@@ -1,13 +1,11 @@
 @extends('layouts.adm-main')
 
 @section('content')
-    <section class="hero py-5">
+    <section class="hero py-2">
         <div class="container text-center">
-            <h1 class="font-weight-bold">SINVENT</h1>
+            <h1 class="font-weight-bold">SISTEM INVENTORY</h1>
         </div>
     </section>
-
-    <hr>
 
     <section id="features" class="features py-5">
         <div class="container">
